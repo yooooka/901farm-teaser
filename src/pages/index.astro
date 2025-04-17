@@ -1,6 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Logo } from '../components/Logo';
+import Layout from "../layouts/Layout.astro";
+import { Logo } from "../components/Logo";
 ---
 
 <Layout title="901farm Rebrand 2025">
@@ -8,7 +8,7 @@ import { Logo } from '../components/Logo';
     <!-- Hero Section -->
     <div class="container mx-auto px-4 py-12">
       <h1 class="sr-only">901farm Rebrand 2025</h1>
-      
+
       <div class="flex flex-col items-center justify-center min-h-screen gap-8">
         <Logo client:load />
 
@@ -16,11 +16,70 @@ import { Logo } from '../components/Logo';
           <p class="text-2xl md:text-3xl lg:text-4xl font-light tracking-wide">
             A New Era in Agriculture
           </p>
-          <p class="text-lg md:text-xl text-gray-400">
-            Coming Spring 2025
-          </p>
+          <p class="text-lg md:text-xl text-gray-400">Coming Spring 2025</p>
+          <a
+            href="#notify"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full hover:bg-gray-200 transition-colors duration-300 group"
+          >
+            Get Notified
+            <svg
+              class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+            >
+          </a>
         </div>
       </div>
     </div>
+
+    <!-- Notification Form -->
+    <section id="notify" class="container mx-auto px-4 py-16">
+      <div class="max-w-md mx-auto">
+        <h2 class="text-2xl font-semibold mb-6">Stay Updated</h2>
+        <form class="space-y-4">
+          <div>
+            <label for="email" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:border-white transition-colors duration-300"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-200 transition-colors duration-300"
+          >
+            Notify Me
+          </button>
+        </form>
+      </div>
+    </section>
   </main>
 </Layout>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 1.5s;
+  }
+</style>
