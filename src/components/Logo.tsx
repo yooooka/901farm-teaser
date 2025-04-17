@@ -6,15 +6,8 @@ export function Logo() {
 
   useEffect(() => {
     const elements = svgRef.current?.querySelectorAll("rect, circle, path");
-    const animatedElements: { [key: string]: boolean } = {}; // Track animated elements
 
     elements?.forEach((element, index) => {
-      const id = element.getAttribute("id") || index.toString();
-
-      // Skip if already animated
-      if (animatedElements[id]) return;
-      animatedElements[id] = true;
-
       if (element.tagName === "path") {
         // Get path length for drawing animation
         const path = element as SVGPathElement;
@@ -29,7 +22,7 @@ export function Logo() {
           path.style.transition =
             "stroke-dashoffset 1.5s ease-in-out, fill-opacity 0.5s ease-in";
 
-          // Run once, avoid repeat
+          // Animate drawing of path
           setTimeout(() => {
             path.style.strokeDashoffset = "0";
 
@@ -37,63 +30,78 @@ export function Logo() {
             setTimeout(() => {
               path.style.fillOpacity = "1";
             }, 800);
-          }, index * 200);
+          }, index * 300);
         } else {
-          // Fallback
-          applySimpleAnimation(element as HTMLElement, index);
+          // Fallback for browsers that don't support getTotalLength
+          (element as HTMLElement).style.opacity = "0";
+          (element as HTMLElement).style.transition = "opacity 1s ease-in-out";
+
+          setTimeout(() => {
+            (element as HTMLElement).style.opacity = "1";
+          }, index * 200);
         }
-      } else if (element.tagName === "rect" || element.tagName === "circle") {
-        // For rectangle and circle, apply special stroke animation
-        const shape = element as SVGElement;
-        const fill = shape.getAttribute("fill");
+      } else if (element.tagName === "rect") {
+        // Animate rect with stroke dasharray
+        const rect = element as SVGRectElement;
+        const width = parseFloat(rect.getAttribute("width") || "0");
+        const height = parseFloat(rect.getAttribute("height") || "0");
 
-        // Set initial appearance
-        shape.setAttribute("stroke", fill || "#000");
-        shape.setAttribute("stroke-width", "5");
-        shape.setAttribute("fill-opacity", "0");
+        // Calculate perimeter
+        const perimeter = 2 * (width + height);
 
-        // Get the perimeter for animation
-        let perimeter = 0;
-        if (element.tagName === "rect") {
-          const width = parseFloat(shape.getAttribute("width") || "0");
-          const height = parseFloat(shape.getAttribute("height") || "0");
-          perimeter = 2 * (width + height);
-        } else if (element.tagName === "circle") {
-          const radius = parseFloat(shape.getAttribute("r") || "0");
-          perimeter = 2 * Math.PI * radius;
-        }
-
-        // Apply dash animation
-        shape.style.strokeDasharray = `${perimeter}`;
-        shape.style.strokeDashoffset = `${perimeter}`;
-        shape.style.transition =
+        // Setup stroke dash animation
+        rect.style.strokeDasharray = `${perimeter}`;
+        rect.style.strokeDashoffset = `${perimeter}`;
+        rect.style.fillOpacity = "0";
+        rect.style.fill = rect.getAttribute("fill") || "";
+        rect.style.transition =
           "stroke-dashoffset 1.8s ease-in-out, fill-opacity 0.6s ease-in";
 
-        // Run once, with delay based on index
+        // Animate stroke
         setTimeout(() => {
-          shape.style.strokeDashoffset = "0";
+          rect.style.strokeDashoffset = "0";
 
-          // Fill after stroke is drawn
+          // Fill in after drawing
           setTimeout(() => {
-            shape.style.fillOpacity = "1";
-          }, 700);
-        }, 200 + index * 300);
+            rect.style.fillOpacity = "1";
+          }, 1000);
+        }, 200);
+      } else if (element.tagName === "circle") {
+        // Animate circle with stroke dasharray
+        const circle = element as SVGCircleElement;
+        const radius = parseFloat(circle.getAttribute("r") || "0");
+
+        // Calculate circumference
+        const circumference = 2 * Math.PI * radius;
+
+        // Setup stroke dash animation
+        circle.style.strokeDasharray = `${circumference}`;
+        circle.style.strokeDashoffset = `${circumference}`;
+        circle.style.fillOpacity = "0";
+        circle.style.fill = circle.getAttribute("fill") || "";
+        circle.style.transition =
+          "stroke-dashoffset 1.8s ease-in-out, fill-opacity 0.6s ease-in";
+
+        // Animate stroke
+        setTimeout(() => {
+          circle.style.strokeDashoffset = "0";
+
+          // Fill in after drawing
+          setTimeout(() => {
+            circle.style.fillOpacity = "1";
+          }, 1000);
+        }, 500);
       } else {
-        // For other elements
-        applySimpleAnimation(element as HTMLElement, index);
+        // For other elements, do a simple fade in
+        (element as HTMLElement).style.opacity = "0";
+        (element as HTMLElement).style.transition = "opacity 1s ease-in-out";
+
+        setTimeout(() => {
+          (element as HTMLElement).style.opacity = "1";
+        }, index * 200 + 500);
       }
     });
   }, []);
-
-  // Helper function for simple fade-in animation
-  const applySimpleAnimation = (element: HTMLElement, index: number) => {
-    element.style.opacity = "0";
-    element.style.transition = "opacity 1s ease-in-out";
-
-    setTimeout(() => {
-      element.style.opacity = "1";
-    }, 500 + index * 200);
-  };
 
   return (
     <div
@@ -103,6 +111,8 @@ export function Logo() {
     >
       <svg
         ref={svgRef}
+        width="4102"
+        height="1654"
         viewBox="0 0 4102 1654"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -111,34 +121,47 @@ export function Logo() {
           filter: "drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.2))",
         }}
       >
-        {/* Yellow rectangle with ID */}
+        {/* Yellow Square - Outline first, then fill */}
         <rect
-          id="yellow-rect"
-          x="3287"
-          y="19"
-          width="815"
-          height="815"
-          fill="#FFCD00"
+          x="3290"
+          y="22"
+          width="809"
+          height="809"
+          fill="none"
           stroke="#FFCD00"
+          strokeWidth="6"
+        />
+        <rect
+          x="3290"
+          y="22"
+          width="809"
+          height="809"
+          fill="#FFCD00"
           strokeWidth="0"
         />
-        {/* Red circle with ID */}
+
+        {/* Red Circle - Outline first, then fill */}
         <circle
-          id="red-circle"
           cx="446.5"
           cy="446.5"
-          r="446.5"
-          fill="#E70C00"
+          r="443.5"
+          fill="none"
           stroke="#E70C00"
+          strokeWidth="6"
+        />
+        <circle
+          cx="446.5"
+          cy="446.5"
+          r="443.5"
+          fill="#E70C00"
           strokeWidth="0"
         />
-        {/* Blue triangle with ID */}
+
         <path
-          id="blue-triangle"
           d="M2387.63 716.529L2387.63 1653.67L1576.04 1185.1L2387.63 716.529Z"
           fill="#0076DD"
           stroke="#0076DD"
-          strokeWidth="0"
+          strokeWidth="5"
         />
         <g clipPath="url(#clip0_1_426)">
           <path
