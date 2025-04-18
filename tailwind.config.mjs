@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter Tight Variable", ...defaultTheme.fontFamily.sans],
+        sans: ["Outfit", ...defaultTheme.fontFamily.sans],
       },
     },
   },
