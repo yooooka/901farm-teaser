@@ -1,0 +1,106 @@
+/* Animation for square outline */
+.square-outline {
+  stroke-dasharray: 3236; /* 2 * (809 + 809) */
+  stroke-dashoffset: 3236;
+  opacity: 1;
+}
+
+.animate-stroke {
+  animation: drawStroke 1.5s ease-in-out forwards;
+}
+
+/* Animation for circle outline */
+.circle-outline {
+  stroke-dasharray: 2787; /* 2 * π * 443.5 */
+  stroke-dashoffset: 2787;
+  opacity: 1;
+}
+
+.animate-stroke-delay {
+  animation: drawStroke 1.2s ease-in-out 1.4s forwards;
+}
+
+/* Fill animations */
+.square-fill, .circle-fill {
+  opacity: 0;
+}
+
+.animate-fill {
+  animation: fadeIn 0.8s ease-in 1.2s forwards;
+}
+
+.animate-fill-delay {
+  animation: fadeIn 0.5s ease-in 2.4s forwards;
+}
+
+/* Triangle animation */
+.triangle {
+  stroke-dasharray: 2800; /* Approximate path length of triangle */
+  stroke-dashoffset: 2800;
+  fill-opacity: 0;
+}
+
+.animate-triangle {
+  animation: drawTriangle 1.2s ease-in-out 0.7s forwards,
+             fillTriangle 0.8s ease-in 1.6s forwards;
+}
+
+/* Text animation */
+.text-elements path {
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  fill-opacity: 0;
+}
+
+.animate-text path {
+  animation: drawText 3s ease-in-out 1.8s forwards,
+             fillText 1.6s ease-in 2.8s forwards;
+}
+
+@keyframes drawStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawTriangle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillTriangle {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+@keyframes drawText {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillText {
+  to {
+    fill-opacity: 1;
+  }
+}
+
+/* For reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .square-outline, .circle-outline, .square-fill,
+  .circle-fill, .triangle, .text-elements path {
+    animation: none !important;
+    opacity: 1 !important;
+    fill-opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+} 
