@@ -5,102 +5,189 @@ export function Logo() {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    const elements = svgRef.current?.querySelectorAll("rect, circle, path");
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
-    elements?.forEach((element, index) => {
-      if (element.tagName === "path") {
-        // Get path length for drawing animation
-        const path = element as SVGPathElement;
+    // If user prefers reduced motion, show everything immediately without animation
+    if (prefersReducedMotion) {
+      // Make all elements visible immediately
+      const allElements =
+        svgRef.current?.querySelectorAll("rect, circle, path");
+      allElements?.forEach((element) => {
+        // Make element visible immediately
+        (element as unknown as SVGElement).style.opacity = "1";
+        (element as unknown as SVGElement).style.fillOpacity = "1";
 
-        if (path.getTotalLength) {
-          const length = path.getTotalLength();
+        // Reset any animation-related properties
+        (element as unknown as SVGElement).style.transition = "none";
+        (element as unknown as SVGElement).style.strokeDasharray = "none";
+        (element as unknown as SVGElement).style.strokeDashoffset = "0";
+      });
+      return; // Exit early, skip all animations
+    }
 
-          // Initial state - path hidden
-          path.style.strokeDasharray = `${length}`;
-          path.style.strokeDashoffset = `${length}`;
-          path.style.fillOpacity = "0";
-          path.style.transition =
-            "stroke-dashoffset 1.5s ease-in-out, fill-opacity 0.5s ease-in";
+    // Triangle start time reference - will be used to coordinate other animations
+    const triangleStartTime = 800; // ms
+    const textStartDelay = triangleStartTime + 500; // 0.5s after triangle starts
 
-          // Animate drawing of path
-          setTimeout(() => {
-            path.style.strokeDashoffset = "0";
+    // Separate elements by type for coordinated animation
+    const shapes = svgRef.current?.querySelectorAll("rect, circle");
+    const triangle = svgRef.current?.querySelector('path[fill="#0076DD"]');
+    const textElements = svgRef.current?.querySelectorAll("g[clip-path] path");
 
-            // Fill in after drawing
-            setTimeout(() => {
-              path.style.fillOpacity = "1";
-            }, 800);
-          }, index * 300);
-        } else {
-          // Fallback for browsers that don't support getTotalLength
-          (element as HTMLElement).style.opacity = "0";
-          (element as HTMLElement).style.transition = "opacity 1s ease-in-out";
-
-          setTimeout(() => {
-            (element as HTMLElement).style.opacity = "1";
-          }, index * 200);
-        }
-      } else if (element.tagName === "rect") {
+    // Animate rect elements first (yellow square)
+    shapes?.forEach((element, index) => {
+      if (element.tagName === "rect") {
         // Animate rect with stroke dasharray
         const rect = element as SVGRectElement;
-        const width = parseFloat(rect.getAttribute("width") || "0");
-        const height = parseFloat(rect.getAttribute("height") || "0");
+        // Only apply animation to the outline rectangle (the one with a stroke)
+        if (
+          rect.getAttribute("stroke") &&
+          rect.getAttribute("fill") === "none"
+        ) {
+          const width = parseFloat(rect.getAttribute("width") || "0");
+          const height = parseFloat(rect.getAttribute("height") || "0");
 
-        // Calculate perimeter
-        const perimeter = 2 * (width + height);
+          // Calculate perimeter
+          const perimeter = 2 * (width + height);
 
-        // Setup stroke dash animation
-        rect.style.strokeDasharray = `${perimeter}`;
-        rect.style.strokeDashoffset = `${perimeter}`;
-        rect.style.fillOpacity = "0";
-        rect.style.fill = rect.getAttribute("fill") || "";
-        rect.style.transition =
-          "stroke-dashoffset 1.8s ease-in-out, fill-opacity 0.6s ease-in";
+          // Setup stroke dash animation
+          rect.style.strokeDasharray = `${perimeter}`;
+          rect.style.strokeDashoffset = `${perimeter}`;
+          rect.style.fillOpacity = "0";
+          rect.style.transition =
+            "stroke-dashoffset 1.8s ease-in-out, fill-opacity 0.6s ease-in";
 
-        // Animate stroke
-        setTimeout(() => {
-          rect.style.strokeDashoffset = "0";
-
-          // Fill in after drawing
+          // Animate stroke
           setTimeout(() => {
-            rect.style.fillOpacity = "1";
-          }, 1000);
-        }, 200);
+            rect.style.strokeDashoffset = "0";
+          }, 200);
+        } else if (rect.getAttribute("fill") !== "none") {
+          // For the fill rectangle
+          (rect as unknown as SVGElement).style.fillOpacity = "0";
+          (rect as unknown as SVGElement).style.transition =
+            "fill-opacity 0.6s ease-in";
+
+          // Add fill after stroke is drawn
+          setTimeout(() => {
+            (rect as unknown as SVGElement).style.fillOpacity = "1";
+          }, 1200);
+        }
       } else if (element.tagName === "circle") {
         // Animate circle with stroke dasharray
         const circle = element as SVGCircleElement;
-        const radius = parseFloat(circle.getAttribute("r") || "0");
+        // Only apply animation to the outline circle (the one with a stroke)
+        if (
+          circle.getAttribute("stroke") &&
+          circle.getAttribute("fill") === "none"
+        ) {
+          const radius = parseFloat(circle.getAttribute("r") || "0");
 
-        // Calculate circumference
-        const circumference = 2 * Math.PI * radius;
+          // Calculate circumference
+          const circumference = 2 * Math.PI * radius;
 
-        // Setup stroke dash animation
-        circle.style.strokeDasharray = `${circumference}`;
-        circle.style.strokeDashoffset = `${circumference}`;
-        circle.style.fillOpacity = "0";
-        circle.style.fill = circle.getAttribute("fill") || "";
-        circle.style.transition =
-          "stroke-dashoffset 1.8s ease-in-out, fill-opacity 0.6s ease-in";
+          // Setup stroke dash animation
+          circle.style.strokeDasharray = `${circumference}`;
+          circle.style.strokeDashoffset = `${circumference}`;
+          circle.style.transition = "stroke-dashoffset 1.8s ease-in-out";
 
-        // Animate stroke
+          // Animate stroke
+          setTimeout(() => {
+            circle.style.strokeDashoffset = "0";
+          }, 500);
+        } else if (circle.getAttribute("fill") !== "none") {
+          // For the fill circle
+          (circle as unknown as SVGElement).style.fillOpacity = "0";
+          (circle as unknown as SVGElement).style.transition =
+            "fill-opacity 0.6s ease-in";
+
+          // Add fill after stroke is drawn
+          setTimeout(() => {
+            (circle as unknown as SVGElement).style.fillOpacity = "1";
+          }, 1500);
+        }
+      }
+    });
+
+    // Animate the triangle (blue path)
+    if (triangle) {
+      const path = triangle as SVGPathElement;
+
+      if (path.getTotalLength) {
+        const length = path.getTotalLength();
+
+        // Initial state - path hidden
+        path.style.strokeDasharray = `${length}`;
+        path.style.strokeDashoffset = `${length}`;
+        path.style.fillOpacity = "0";
+        path.style.transition =
+          "stroke-dashoffset 1.5s ease-in-out, fill-opacity 0.5s ease-in";
+
+        // Animate drawing of triangle at the specified start time
         setTimeout(() => {
-          circle.style.strokeDashoffset = "0";
+          path.style.strokeDashoffset = "0";
 
           // Fill in after drawing
           setTimeout(() => {
-            circle.style.fillOpacity = "1";
-          }, 1000);
-        }, 500);
+            path.style.fillOpacity = "1";
+          }, 800);
+        }, triangleStartTime);
+      }
+    }
+
+    // Animate text elements with a single coordinated sequence
+    textElements?.forEach((element, index) => {
+      const path = element as SVGPathElement;
+
+      if (path.getTotalLength) {
+        const length = path.getTotalLength();
+
+        // Set up animation properties
+        path.style.strokeDasharray = `${length}`;
+        path.style.strokeDashoffset = `${length}`;
+        path.style.fillOpacity = "0";
+        path.style.transition =
+          "stroke-dashoffset 1.2s ease-in-out, fill-opacity 0.4s ease-in";
+
+        // Schedule animation start - staggered but all starting after textStartDelay
+        setTimeout(() => {
+          path.style.strokeDashoffset = "0";
+
+          // Fade in fill after stroke animation
+          setTimeout(() => {
+            path.style.fillOpacity = "1";
+          }, 400);
+        }, textStartDelay + index * 50); // Small stagger between text paths
       } else {
-        // For other elements, do a simple fade in
+        // Fallback for browsers that don't support getTotalLength
         (element as HTMLElement).style.opacity = "0";
-        (element as HTMLElement).style.transition = "opacity 1s ease-in-out";
+        (element as HTMLElement).style.transition = "opacity 0.8s ease-in";
 
         setTimeout(() => {
           (element as HTMLElement).style.opacity = "1";
-        }, index * 200 + 500);
+        }, textStartDelay + index * 50);
       }
     });
+
+    // Setup listener for prefers-reduced-motion changes
+    const motionMediaQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+    const handleMotionChange = () => {
+      // If motion preference changes while page is open, reload to apply new setting
+      if (motionMediaQuery.matches) {
+        window.location.reload();
+      }
+    };
+
+    motionMediaQuery.addEventListener("change", handleMotionChange);
+
+    // Cleanup event listener
+    return () => {
+      motionMediaQuery.removeEventListener("change", handleMotionChange);
+    };
   }, []);
 
   return (
@@ -157,12 +244,15 @@ export function Logo() {
           strokeWidth="0"
         />
 
+        {/* Blue Triangle */}
         <path
           d="M2387.63 716.529L2387.63 1653.67L1576.04 1185.1L2387.63 716.529Z"
           fill="#0076DD"
           stroke="#0076DD"
           strokeWidth="5"
         />
+
+        {/* Text Elements */}
         <g clipPath="url(#clip0_1_426)">
           <path
             d="M2113.92 728.015V703.298H2040.8V700.564C2040.8 685.53 2049.16 677.329 2064.48 677.329H2113.92V557.732H2022.7C1944.02 557.732 1894.58 604.204 1894.58 679.379V703.298H1831.68V822.894H1894.58V1049.79H2040.8V822.894H2075.15C2080.78 788.155 2094.3 755.92 2113.92 728.072V728.015Z"
