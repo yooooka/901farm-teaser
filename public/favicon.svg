@@ -1,1 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 2" viewBox="0 0 1185.04 972.59"><g data-name="Layer 1"><path d="M612.79 0h572.24v572.24H612.79z" style="fill:#ffcd00"/><circle cx="286.12" cy="286.12" r="286.12" style="fill:#e70c00"/><path d="M723.17 403.91v568.68L230.68 688.25z" style="fill:#0076dd"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1103.72" height="1026.8"><svg id="SvgjsSvg1019" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1103.72 1026.8">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0076dd;
+      }
+
+      .cls-2 {
+        fill: #e70c00;
+      }
+
+      .cls-3 {
+        fill: #ffcd00;
+      }
+    </style>
+  </defs>
+  <g id="SvgjsG1018" data-name="Layer 1">
+    <circle class="cls-2" cx="286.12" cy="286.12" r="286.12"></circle>
+    <rect class="cls-3" x="531.48" y="271.65" width="572.24" height="572.24"></rect>
+    <path class="cls-1" d="M617.99,458.12v568.68L125.5,742.46l492.49-284.34Z"></path>
+  </g>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
