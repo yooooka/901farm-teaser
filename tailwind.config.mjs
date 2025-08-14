@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Outfit", ...defaultTheme.fontFamily.sans],
+        sans: ["STIX Two Text", ...defaultTheme.fontFamily.sans],
       },
     },
   },
