@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["STIX Two Text", ...defaultTheme.fontFamily.sans],
+        serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
       },
     },
   },
