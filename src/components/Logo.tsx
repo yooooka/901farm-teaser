@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "./Logo.css"; // Import CSS file for animations
+// import "./Logo.css"; // Import CSS file for animations
 
 // SVG path drawing animation effect
 export function Logo() {

@@ -22,8 +22,13 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="bg-black text-gray-400 p-8 leading-tight">
     <slot />
+    <footer>
+      <p class="text-xs md:text-sm text-center text-pretty font-sans">
+        Copyright © 901farm LLC. All rights reserved.
+      </p>
+    </footer>
   </body>
 </html>
 
