@@ -7,6 +7,7 @@ export default {
     extend: {
       fontFamily: {
         serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
+        sans: ["Afacad Flux Variable", ...defaultTheme.fontFamily.sans],
       },
     },
   },
