@@ -1,25 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Logo } from "../components/Logo";
+import Logo from "../components/Logo.astro";
 ---
 
 <Layout title="901farm LLC">
   <main>
-    <!-- Hero Section -->
     <h1 class="sr-only">901farm LLC</h1>
 
     <div
-      class="flex flex-col items-center justify-center min-h-[90svh] gap-8 max-w-lg mx-auto"
+      class="flex flex-col items-center justify-center min-h-[90svh] gap-8 max-w-lg mx-auto text-gray-200"
     >
-      <Logo client:load />
-
-      <div class="text-center text-gray-400">
-        <p
-          class="text-lg leading-tight md:text-xl text-animation text-pretty font-sans"
+      <Logo />
+      <p
+        class="text-center text-lg md:text-xl text-balance font-sans font-[500] tracking-wide"
+      >
+        We are creative creatures.
+      </p>
+      <p
+        class="text-animation text-center text-lg md:text-xl text-balance font-sans font-[500] tracking-wide text-yellow-400"
+      >
+        <a
+          href="https://store.901farm.com"
+          class="underline hover:no-underline underline-offset-4 hover:text-white transition-colors"
         >
-          We are creative creatures. Fun, Bold and Non-sense ideas to Life!
-        </p>
-      </div>
+          Our store
+        </a>
+      </p>
     </div>
   </main>
 </Layout>
@@ -40,45 +46,15 @@ import { Logo } from "../components/Logo";
     opacity: 0;
   }
 
-  .text-animation-delayed {
-    opacity: 0;
-  }
-
   @media (prefers-reduced-motion: no-preference) {
     .text-animation {
-      animation: fadeIn 1s ease-out forwards;
-      animation-delay: 0.3s;
-    }
-
-    .text-animation-delayed {
-      animation: fadeIn 1s ease-out forwards;
-      animation-delay: 0.8s;
+      animation: fadeIn 1s ease-out 0.3s forwards;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .text-animation,
-    .text-animation-delayed {
+    .text-animation {
       opacity: 1;
-      transform: translateY(0);
-      transition: none;
     }
   }
 </style>
-
-<script>
-  // Check if the user prefers reduced motion
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  // If user prefers reduced motion, make text visible immediately
-  if (prefersReducedMotion) {
-    document
-      .querySelectorAll(".text-animation, .text-animation-delayed")
-      .forEach((el) => {
-        (el as HTMLElement).style.opacity = "1";
-        (el as HTMLElement).style.transform = "translateY(0)";
-      });
-  }
-</script>
