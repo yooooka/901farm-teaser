@@ -2,4 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base global styles can be added here */
+@font-face {
+  font-family: "TWKBurns-ExtraBold";
+  src: url("/fonts/TWKBurns-ExtraBold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  /* Accessible focus + motion handling for interactive elements */
+  a,
+  button {
+    @apply duration-1000 hover:transition-shadow hover:duration-700 focus-visible:outline-dashed focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-stone-500 focus-visible:duration-100 motion-reduce:duration-0 motion-reduce:hover:duration-0;
+  }
+}
+
+@layer components {
+  /* Signature highlight link: thin yellow underline that grows to a full
+     fill on hover, with text flipping to dark for contrast. */
+  .link-highlight {
+    @apply pb-1 font-semibold leading-tight text-stone-200 no-underline;
+    box-shadow: inset 0 -0.3em 0 rgba(255, 225, 1, 0.9);
+  }
+
+  .link-highlight:hover {
+    @apply text-stone-900;
+    box-shadow: inset 0 -1.4em 0 rgba(255, 225, 1, 0.9);
+  }
+}

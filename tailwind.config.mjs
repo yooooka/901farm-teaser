@@ -6,8 +6,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
-        sans: ["Jost Variable", ...defaultTheme.fontFamily.sans],
+        serif: ["Literata Variable", ...defaultTheme.fontFamily.serif],
+        sans: ["Inter Tight Variable", ...defaultTheme.fontFamily.sans],
+        headings: ["Inter Tight Variable", ...defaultTheme.fontFamily.sans],
+        twkBurns: ["TWKBurns-ExtraBold", ...defaultTheme.fontFamily.sans],
       },
       // Tight line-height baked into every size so it doesn't need
       // to be repeated as `leading-tight` on each element.
