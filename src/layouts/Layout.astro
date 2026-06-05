@@ -2,7 +2,7 @@
 interface Props {
   title: string;
 }
-import "@fontsource-variable/afacad-flux";
+import "@fontsource-variable/jost";
 const { title } = Astro.props;
 ---
 
@@ -10,22 +10,23 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="901farm - A New Era in Agriculture" />
+    <meta
+      name="description"
+      content="901farm LLC - We are creative creatures."
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-black text-gray-400 p-8 leading-tight">
+  <body class="bg-black text-gray-200 p-8">
     <slot />
     <footer>
-      <p class="text-xs md:text-sm text-center text-pretty font-sans">
+      <p
+        class="text-xs md:text-sm text-center text-pretty font-sans tracking-wide"
+      >
         Copyright © 901farm LLC. All rights reserved.
       </p>
     </footer>

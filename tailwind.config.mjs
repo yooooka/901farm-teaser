@@ -7,7 +7,17 @@ export default {
     extend: {
       fontFamily: {
         serif: ["STIX Two Text", ...defaultTheme.fontFamily.serif],
-        sans: ["Afacad Flux Variable", ...defaultTheme.fontFamily.sans],
+        sans: ["Jost Variable", ...defaultTheme.fontFamily.sans],
+      },
+      // Tight line-height baked into every size so it doesn't need
+      // to be repeated as `leading-tight` on each element.
+      fontSize: {
+        xs: ["0.75rem", { lineHeight: "1.25" }],
+        sm: ["0.875rem", { lineHeight: "1.25" }],
+        base: ["1rem", { lineHeight: "1.25" }],
+        lg: ["1.125rem", { lineHeight: "1.25" }],
+        xl: ["1.25rem", { lineHeight: "1.25" }],
+        "2xl": ["1.5rem", { lineHeight: "1.25" }],
       },
     },
   },
