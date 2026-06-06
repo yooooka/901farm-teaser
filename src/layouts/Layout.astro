@@ -2,7 +2,9 @@
 interface Props {
   title: string;
 }
-import "@fontsource-variable/jost";
+import "../global.css";
+import "@fontsource-variable/inter-tight";
+import "@fontsource-variable/literata";
 const { title } = Astro.props;
 ---
 
@@ -21,7 +23,9 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-black text-gray-200 p-8">
+  <body
+    class="bg-black p-8 font-sans text-gray-200 selection:bg-[#0076dd] selection:text-zinc-950"
+  >
     <slot />
     <footer>
       <p
