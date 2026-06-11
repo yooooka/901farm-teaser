@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Logo from "../components/Logo.astro";
+import Creature1 from "../components/Creature1.astro";
+import Creature2 from "../components/Creature2.astro";
 ---
 
 <Layout title="901farm LLC">
@@ -8,19 +10,41 @@ import Logo from "../components/Logo.astro";
     <h1 class="sr-only">901farm LLC</h1>
 
     <div
-      class="flex flex-col items-center justify-center min-h-[90svh] gap-8 max-w-lg mx-auto text-gray-200"
+      class="flex flex-col items-center min-h-[90svh] max-w-lg mx-auto text-gray-200"
     >
-      <Logo />
-      <h2
-        class="text-center text-xl sm:text-2xl text-balance font-twkBurns tracking-wide"
-      >
-        We are creative creatures.
-      </h2>
+      <div class="flex flex-1 flex-col items-center justify-center gap-6">
+        <Logo />
+        <h2
+          class="text-center text-xl sm:text-2xl text-balance font-twkBurns tracking-wide"
+        >
+          We are creative creatures.
+        </h2>
+
+        <p
+          class="text-animation text-center text-lg md:text-xl text-balance font-sans tracking-wide"
+        >
+          <a href="https://store.901farm.com" class="link-highlight">
+            Our store
+          </a>
+        </p>
+      </div>
       <p
-        class="text-animation text-center text-lg md:text-xl text-balance font-sans tracking-wide"
+        class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pb-6 text-center text-sm text-balance font-sans tracking-wide text-stone-300"
       >
-        <a href="https://store.901farm.com" class="link-highlight">
-          Our store
+        <a
+          href="https://yoshiko.901farm.com"
+          class="group flex flex-col items-center gap-2"
+        >
+          <Creature1
+            class="h-10 w-auto"
+            label="Creature #1, Yoshiko's Portfolio"
+          />
+        </a>
+        <a
+          href="https://linkedin.com/in/joseph-wright-2aba8b65"
+          class="group flex flex-col items-center gap-2"
+        >
+          <Creature2 class="h-10 w-auto" label="Creature #2, Joe's LinkedIn" />
         </a>
       </p>
     </div>
