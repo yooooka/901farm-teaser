@@ -1,8 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Logo from "../components/Logo.astro";
-import Creature1 from "../components/Creature1.astro";
-import Creature2 from "../components/Creature2.astro";
 ---
 
 <Layout title="901farm LLC">
@@ -33,18 +31,17 @@ import Creature2 from "../components/Creature2.astro";
       >
         <a
           href="https://yoshiko.901farm.com"
-          class="group flex flex-col items-center gap-2"
+          class="link-highlight"
+          aria-label="Creature #1, Yoshiko's Portfolio"
         >
-          <Creature1
-            class="h-10 w-auto"
-            label="Creature #1, Yoshiko's Portfolio"
-          />
+          Creature Yoyo
         </a>
         <a
           href="https://linkedin.com/in/joseph-wright-2aba8b65"
-          class="group flex flex-col items-center gap-2"
+          class="link-highlight"
+          aria-label="Creature #2, Joe's LinkedIn"
         >
-          <Creature2 class="h-10 w-auto" label="Creature #2, Joe's LinkedIn" />
+          Creature Jojo
         </a>
       </p>
     </div>
